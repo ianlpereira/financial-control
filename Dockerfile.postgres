@@ -1,7 +1,7 @@
 FROM postgres:16-alpine
 
-ENV POSTGRES_USER={{CLIENT_NAME}}_user
-ENV POSTGRES_PASSWORD={{CLIENT_NAME}}_password
-ENV POSTGRES_DB={{CLIENT_NAME}}_db
+ENV POSTGRES_USER=dr-exercicio_user
+ENV POSTGRES_PASSWORD=dr-exercicio_password
+ENV POSTGRES_DB=dr-exercicio_db
 
 EXPOSE 5432
