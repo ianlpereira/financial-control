@@ -10,4 +10,4 @@ router = APIRouter(prefix="/api/health", tags=["health"])
 @router.get("/", response_model=dict)
 async def health_check():
     """Health check endpoint."""
-    return {"status": "ok", "message": "{{CLIENT_NAME}} API is running"}
+    return {"status": "ok", "message": "dr-exercicio API is running"}

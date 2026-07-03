@@ -1,5 +1,5 @@
 """
-{{CLIENT_NAME}} - Backend Application
+dr-exercicio - Backend Application
 Sistema Financeiro de Contas a Pagar
 """
 

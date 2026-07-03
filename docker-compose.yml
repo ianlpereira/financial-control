@@ -1,17 +1,17 @@
 services:
   db:
     image: postgres:16-alpine
-    container_name: {{CLIENT_NAME}}_db
+    container_name: dr-exercicio_db
     environment:
-      POSTGRES_USER: ${DB_USER:-{{CLIENT_NAME}}_user}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-{{CLIENT_NAME}}_password}
-      POSTGRES_DB: ${DB_NAME:-{{CLIENT_NAME}}_db}
+      POSTGRES_USER: ${DB_USER:-dr-exercicio_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-dr-exercicio_password}
+      POSTGRES_DB: ${DB_NAME:-dr-exercicio_db}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-{{CLIENT_NAME}}_user} -d ${DB_NAME:-{{CLIENT_NAME}}_db}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-dr-exercicio_user} -d ${DB_NAME:-dr-exercicio_db}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -21,9 +21,9 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       target: production
-    container_name: {{CLIENT_NAME}}_backend
+    container_name: dr-exercicio_backend
     environment:
-      DATABASE_URL: postgresql+asyncpg://${DB_USER:-{{CLIENT_NAME}}_user}:${DB_PASSWORD:-{{CLIENT_NAME}}_password}@db:5432/${DB_NAME:-{{CLIENT_NAME}}_db}
+      DATABASE_URL: postgresql+asyncpg://${DB_USER:-dr-exercicio_user}:${DB_PASSWORD:-dr-exercicio_password}@db:5432/${DB_NAME:-dr-exercicio_db}
       ENVIRONMENT: ${ENVIRONMENT:-development}
       DEBUG: ${DEBUG:-true}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY:-jwt-secret-change-in-production-please}
@@ -47,7 +47,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       target: development
-    container_name: {{CLIENT_NAME}}_frontend
+    container_name: dr-exercicio_frontend
     environment:
       NODE_ENV: development
     ports:

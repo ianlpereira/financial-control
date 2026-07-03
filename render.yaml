@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: {{CLIENT_NAME}}-backend
+    name: dr-exercicio-backend
     runtime: docker
     region: ohio
     plan: starter
@@ -24,7 +24,7 @@ services:
     autoDeploy: true
 
   - type: web
-    name: {{CLIENT_NAME}}-frontend
+    name: dr-exercicio-frontend
     runtime: docker
     region: ohio
     plan: starter
@@ -37,11 +37,11 @@ services:
     dockerContext: ./frontend
     dockerBuildArgs:
       - key: VITE_API_URL
-        value: https://{{CLIENT_NAME}}-backend.onrender.com
+        value: https://dr-exercicio-backend.onrender.com
     autoDeploy: true
 
   - type: pserv
-    name: {{CLIENT_NAME}}-db
+    name: dr-exercicio-db
     runtime: docker
     region: ohio
     plan: starter

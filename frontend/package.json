@@ -1,5 +1,5 @@
 {
-  "name": "{{CLIENT_NAME}}-frontend",
+  "name": "dr-exercicio-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",

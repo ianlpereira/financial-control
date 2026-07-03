@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     SECRET_KEY: str = "your-secret-key-change-in-production"
 
     # Database
-    DATABASE_URL: str = "postgresql+asyncpg://{{CLIENT_NAME}}_user:{{CLIENT_NAME}}_password@db:5432/{{CLIENT_NAME}}_db"
+    DATABASE_URL: str = "postgresql+asyncpg://dr-exercicio_user:dr-exercicio_password@db:5432/dr-exercicio_db"
     DB_ECHO: bool = False
 
     # CORS
@@ -23,12 +23,12 @@ class Settings(BaseSettings):
         "http://localhost:5173",              # Local frontend dev
         "http://localhost:3000",              # Local frontend prod
         "http://frontend:5173",               # Docker compose frontend container
-        "https://{{CLIENT_NAME}}.onrender.com",     # Render frontend
+        "https://dr-exercicio.onrender.com",     # Render frontend
     ]
 
     # API
     API_V1_STR: str = "/api/v1"
-    PROJECT_NAME: str = "{{CLIENT_NAME}}"
+    PROJECT_NAME: str = "dr-exercicio"
 
     # Auth / JWT
     JWT_SECRET_KEY: str = "jwt-secret-change-in-production-please"

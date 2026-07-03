@@ -7,7 +7,7 @@
 # Example:
 #   ./scripts/setup.sh acme
 #
-# This script replaces all {{CLIENT_NAME}} placeholders with the given client
+# This script replaces all dr-exercicio placeholders with the given client
 # name across every relevant file, then prints next steps.
 
 set -euo pipefail
@@ -55,12 +55,12 @@ FILE_PATTERNS=(
 
 # ─── Replace placeholders ────────────────────────────────────────────────────
 
-echo "Replacing {{CLIENT_NAME}} → $CLIENT_NAME ..."
+echo "Replacing dr-exercicio → $CLIENT_NAME ..."
 
 for pattern in "${FILE_PATTERNS[@]}"; do
   while IFS= read -r -d '' file; do
-    if grep -qF '{{CLIENT_NAME}}' "$file" 2>/dev/null; then
-      sed -i "s/{{CLIENT_NAME}}/$CLIENT_NAME/g" "$file"
+    if grep -qF 'dr-exercicio' "$file" 2>/dev/null; then
+      sed -i "s/dr-exercicio/$CLIENT_NAME/g" "$file"
       echo "  ✓  $file"
     fi
   done < <(find "$PROJECT_ROOT" \

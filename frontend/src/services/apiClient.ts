@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 
 // API URL from build-time environment variable
-// Must be set at build time: docker build --build-arg VITE_API_URL=https://{{CLIENT_NAME}}.onrender.com
+// Must be set at build time: docker build --build-arg VITE_API_URL=https://dr-exercicio.onrender.com
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 export const apiClient: AxiosInstance = axios.create({

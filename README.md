@@ -56,7 +56,7 @@ cp .env.example .env
 docker compose up -d
 ```
 
-O script `setup.sh` substitui todos os placeholders `{{CLIENT_NAME}}` pelo nome do cliente em todos os arquivos relevantes.
+O script `setup.sh` substitui todos os placeholders `dr-exercicio` pelo nome do cliente em todos os arquivos relevantes.
 
 ---
 

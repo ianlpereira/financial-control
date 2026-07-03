@@ -1,5 +1,5 @@
 /**
- * Date utilities for {{CLIENT_NAME}} application.
+ * Date utilities for dr-exercicio application.
  *
  * The backend returns dates as pure "YYYY-MM-DD" strings (no timezone).
  * All helpers here operate on that plain string format to avoid UTC offset

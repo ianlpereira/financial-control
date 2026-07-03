@@ -1,5 +1,5 @@
 /**
- * Type definitions for {{CLIENT_NAME}} application
+ * Type definitions for dr-exercicio application
  */
 
 // Branch types

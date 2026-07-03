@@ -1,7 +1,7 @@
 {
-  "name": "{{CLIENT_NAME}}",
+  "name": "dr-exercicio",
   "version": "1.0.0",
-  "description": "{{CLIENT_NAME}} - Financial Control Application",
+  "description": "dr-exercicio - Financial Control Application",
   "scripts": {
     "migration:create": "cd backend && alembic revision --autogenerate -m",
     "migration:run": "cd backend && alembic upgrade head",

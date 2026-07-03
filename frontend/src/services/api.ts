@@ -1,5 +1,5 @@
 /**
- * API service functions for {{CLIENT_NAME}}
+ * API service functions for dr-exercicio
  */
 
 import apiClient from './apiClient';
