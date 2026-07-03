@@ -104,7 +104,6 @@ export interface Bill {
   payment_bank?: string | null;
   paid_at?: string | null;
   attachments_count?: number;
-  vehicle_id?: number | null;
   payment_method_id?: number | null;    // Epic 17
   payment_method_name?: string | null;  // Epic 17
 }
@@ -123,7 +122,6 @@ export interface BillCreate {
   recurrence_occurrences?: number | null;
   recurrence_day_of_month?: number | null;
   recurrence_dates?: string[] | null;
-  vehicle_id?: number | null;
   payment_method_id?: number | null;  // Epic 17
 }
 
@@ -139,7 +137,6 @@ export interface BillUpdate {
   vendor_id?: number;
   category_id?: number;
   branch_id?: number;
-  vehicle_id?: number | null;
   payment_method_id?: number | null;  // Epic 17
 }
 
@@ -161,37 +158,6 @@ export interface BillAttachment {
 // API Response types
 export interface ApiError {
   detail: string;
-}
-
-// Vehicle types
-export interface Vehicle {
-  id: number;
-  plate: string;
-  brand: string;
-  model: string;
-  year: number | null;
-  branch_id: number;
-  notes: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface VehicleCreate {
-  plate: string;
-  brand: string;
-  model: string;
-  year?: number | null;
-  branch_id: number;
-  notes?: string | null;
-}
-
-export interface VehicleUpdate {
-  plate?: string;
-  brand?: string;
-  model?: string;
-  year?: number | null;
-  branch_id?: number;
-  notes?: string | null;
 }
 
 // Payment Method types
@@ -224,7 +190,6 @@ export interface BillRecurrenceUpdate {
   vendor_id?: number;
   category_id?: number;
   branch_id?: number;
-  vehicle_id?: number | null;
   payment_method_id?: number | null;  // Epic 17
 }
 
@@ -265,7 +230,6 @@ export interface BillReportRow {
   vendor_name: string | null;
   category_name: string | null;
   branch_name: string | null;
-  vehicle_plate: string | null;
   amount: number;
   due_date: string;
   status: BillStatus;

@@ -112,7 +112,6 @@ async def get_report(
     branch_ids: Optional[str] = Query(None),
     vendor_ids: Optional[str] = Query(None),
     category_id: Optional[int] = Query(None),
-    vehicle_ids: Optional[str] = Query(None),
     status: Optional[str] = Query(None),
     payment_bank: Optional[str] = Query(None),
     payment_method_id: Optional[int] = Query(None),  # Epic 17
@@ -130,7 +129,6 @@ async def get_report(
         branch_ids=parse_ids(branch_ids),
         vendor_ids=parse_ids(vendor_ids),
         category_ids=[category_id] if category_id else None,
-        vehicle_ids=parse_ids(vehicle_ids),
         statuses=[status] if status else None,
         payment_banks=[payment_bank] if payment_bank else None,
         payment_method_ids=[payment_method_id] if payment_method_id else None,
@@ -167,7 +165,6 @@ async def create_bill(schema: BillCreate, db: AsyncSession = Depends(get_db)):
             schema.recurrence_occurrences,
             schema.recurrence_day_of_month,
             schema.recurrence_dates,
-            schema.vehicle_id,
             schema.payment_method_id,
         )
     except ValueError as e:
@@ -191,7 +188,6 @@ async def update_bill(bill_id: int, schema: BillUpdate, db: AsyncSession = Depen
             schema.vendor_id,
             schema.category_id,
             schema.branch_id,
-            schema.vehicle_id,
             schema.payment_method_id,
         )
         if not updated:
@@ -228,7 +224,6 @@ async def update_bill_recurrence(
             schema.vendor_id,
             schema.category_id,
             schema.branch_id,
-            schema.vehicle_id,
             schema.payment_method_id,
         )
         if not updated:

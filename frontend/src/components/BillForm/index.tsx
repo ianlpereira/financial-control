@@ -7,7 +7,7 @@ import { z } from 'zod';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { useCreateBill, useUpdateBill, useUpdateBillRecurrence, useBranches, useVendors, useCategories, useVehicles, useActivePaymentMethods } from '../../hooks';
+import { useCreateBill, useUpdateBill, useUpdateBillRecurrence, useBranches, useVendors, useCategories, useActivePaymentMethods } from '../../hooks';
 import { useBranchStore } from '../../context/branchStore';
 import { BillStatus } from '../../types';
 import type { Bill } from '../../types';
@@ -30,7 +30,6 @@ const billSchema = z.object({
   recurrence_interval_days: z.number().min(1).nullable().optional(),
   recurrence_occurrences: z.number().min(2).max(60).nullable().optional(),
   recurrence_day_of_month: z.number().min(1).max(28).nullable().optional(),
-  vehicle_id: z.number().nullable().optional(),
   payment_method_id: z.number().nullable().optional(),  // Epic 17
 });
 
@@ -50,7 +49,6 @@ export function BillForm({ bill, initialValues, onSuccess, onCancel }: BillFormP
   const { data: branches } = useBranches();
   const { data: vendors } = useVendors();
   const { data: categories } = useCategories();
-  const { data: vehicles } = useVehicles();
   const { data: paymentMethods = [] } = useActivePaymentMethods();
   const { currentBranch } = useBranchStore();
 
@@ -141,7 +139,6 @@ export function BillForm({ bill, initialValues, onSuccess, onCancel }: BillFormP
       recurrence_interval_days: (!useFixedDay && !useManualDates && data.is_recurring) ? data.recurrence_interval_days : null,
       recurrence_occurrences: (data.is_recurring && !useManualDates) ? data.recurrence_occurrences : null,
       recurrence_day_of_month: useFixedDay ? data.recurrence_day_of_month : null,
-      vehicle_id: data.vehicle_id || null,
       payment_method_id: data.payment_method_id ?? null,
     };
 
@@ -194,7 +191,6 @@ export function BillForm({ bill, initialValues, onSuccess, onCancel }: BillFormP
           vendor_id: pendingFormData.vendor_id,
           category_id: pendingFormData.category_id,
           branch_id: pendingFormData.branch_id,
-          vehicle_id: pendingFormData.vehicle_id ?? null,
           payment_method_id: pendingFormData.payment_method_id ?? null,
         },
       },
@@ -387,29 +383,6 @@ export function BillForm({ bill, initialValues, onSuccess, onCancel }: BillFormP
           control={control}
           render={({ field }) => (
             <Input.TextArea {...field} value={field.value || ''} placeholder="Observações adicionais" rows={3} />
-          )}
-        />
-      </Form.Item>
-
-      <Form.Item label="Veículo (opcional)">
-        <Controller
-          name="vehicle_id"
-          control={control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              allowClear
-              placeholder="Associar a um veículo"
-              showSearch
-              optionFilterProp="label"
-              options={[
-                { value: null, label: 'Nenhum' },
-                ...(vehicles?.map((v: any) => ({
-                  value: v.id,
-                  label: `${v.plate.toUpperCase()} — ${v.brand} ${v.model}`,
-                })) ?? []),
-              ]}
-            />
           )}
         />
       </Form.Item>

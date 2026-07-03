@@ -94,14 +94,13 @@ export function ReportsPage(): React.ReactElement {
 
   const handleExportCsv = () => {
     if (!reportData?.rows?.length) return;
-    const headers = ['ID', 'Descrição', 'Fornecedor', 'Categoria', 'Filial', 'Veículo', 'Valor', 'Vencimento', 'Status', 'Banco', 'Pago em', 'Meio de Pgto'];
+    const headers = ['ID', 'Descrição', 'Fornecedor', 'Categoria', 'Filial', 'Valor', 'Vencimento', 'Status', 'Banco', 'Pago em', 'Meio de Pgto'];
     const rows = reportData.rows.map(r => [
       r.id,
       `"${r.description.replace(/"/g, '""')}"`,
       `"${(r.vendor_name || '').replace(/"/g, '""')}"`,
       `"${(r.category_name || '').replace(/"/g, '""')}"`,
       `"${(r.branch_name || '').replace(/"/g, '""')}"`,
-      r.vehicle_plate || '',
       r.amount.toFixed(2).replace('.', ','),
       r.due_date,
       statusLabels[r.status] || r.status,
@@ -149,13 +148,6 @@ export function ReportsPage(): React.ReactElement {
       dataIndex: 'branch_name',
       key: 'branch_name',
       render: (v: string | null) => v || <span style={{ color: '#bbb' }}>—</span>,
-    },
-    {
-      title: 'Veículo',
-      dataIndex: 'vehicle_plate',
-      key: 'vehicle_plate',
-      render: (v: string | null) => v || <span style={{ color: '#bbb' }}>—</span>,
-      width: 110,
     },
     {
       title: 'Valor',

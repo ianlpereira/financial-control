@@ -5,10 +5,9 @@ Bill repository for CRUD operations on bills.
 from typing import List, Optional
 from datetime import date
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, and_
+from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 from app.models import Bill, BillStatus
-from app.models.payment_method import PaymentMethod
 from app.repositories.base import BaseRepository
 
 
@@ -121,19 +120,6 @@ class BillRepository(BaseRepository[Bill]):
         )
         return result.unique().scalars().all()
 
-    async def get_by_vehicle(self, vehicle_id: int) -> List[Bill]:
-        """Get all non-deleted bills associated with a vehicle."""
-        result = await self.db.execute(
-            select(Bill)
-            .options(joinedload(Bill.payment_method))
-            .where(
-                Bill.vehicle_id == vehicle_id,
-                Bill.deleted_at == None,  # noqa: E711
-            )
-            .order_by(Bill.due_date, Bill.description)
-        )
-        return result.unique().scalars().all()
-
     async def get_by_category(self, category_id: int) -> List[Bill]:
         """Get all non-deleted bills for a category."""
         result = await self.db.execute(
@@ -155,16 +141,14 @@ class BillRepository(BaseRepository[Bill]):
         branch_ids: list = None,
         vendor_ids: list = None,
         category_ids: list = None,
-        vehicle_ids: list = None,
         statuses: list = None,
         payment_banks: list = None,
         payment_method_ids: list = None,  # Epic 17
     ) -> list:
-        """Get bills for the reports page with joined vendor/category/branch/vehicle/payment_method names."""
+        """Get bills for the reports page with joined vendor/category/branch/payment method names."""
         from app.models.vendor import Vendor
         from app.models.category import Category
         from app.models.branch import Branch
-        from app.models.vehicle import Vehicle
         from app.models.payment_method import PaymentMethod
 
         stmt = (
@@ -173,13 +157,11 @@ class BillRepository(BaseRepository[Bill]):
                 Vendor.name.label("vendor_name"),
                 Category.name.label("category_name"),
                 Branch.name.label("branch_name"),
-                Vehicle.plate.label("vehicle_plate"),
                 PaymentMethod.name.label("payment_method_name"),
             )
             .outerjoin(Vendor, Bill.vendor_id == Vendor.id)
             .outerjoin(Category, Bill.category_id == Category.id)
             .outerjoin(Branch, Bill.branch_id == Branch.id)
-            .outerjoin(Vehicle, Bill.vehicle_id == Vehicle.id)
             .outerjoin(PaymentMethod, Bill.payment_method_id == PaymentMethod.id)
             .where(Bill.deleted_at == None)  # noqa: E711
         )
@@ -204,8 +186,6 @@ class BillRepository(BaseRepository[Bill]):
             stmt = stmt.where(Bill.vendor_id.in_(vendor_ids))
         if category_ids:
             stmt = stmt.where(Bill.category_id.in_(category_ids))
-        if vehicle_ids:
-            stmt = stmt.where(Bill.vehicle_id.in_(vehicle_ids))
         if statuses:
             stmt = stmt.where(Bill.status.in_(statuses))
         if payment_banks:
@@ -224,7 +204,6 @@ class BillRepository(BaseRepository[Bill]):
                 "vendor_name": row.vendor_name,
                 "category_name": row.category_name,
                 "branch_name": row.branch_name,
-                "vehicle_plate": row.vehicle_plate,
                 "amount": row.Bill.amount,
                 "due_date": row.Bill.due_date,
                 "status": row.Bill.status,
