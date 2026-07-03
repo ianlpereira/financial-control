@@ -50,6 +50,7 @@ FILE_PATTERNS=(
   "*.env.example"
   "*.ini"
   "*.sh"
+  "Dockerfile*"
 )
 
 # ─── Replace placeholders ────────────────────────────────────────────────────
